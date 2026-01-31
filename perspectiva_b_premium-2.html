@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Perspectiva B</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root{
+      --grad-1:#6a5acd;   /* morado */
+      --grad-2:#1e3c72;   /* azul */
+      --card-bg:rgba(255,255,255,0.12);
+      --card-border:rgba(255,255,255,0.25);
+      --text-main:#f5f6ff;
+      --text-soft:#d6d8ff;
+      --accent:#b9a6ff;
+    }
+
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      min-height:100vh;
+      background: linear-gradient(135deg, var(--grad-1), var(--grad-2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      color:var(--text-main);
+    }
+
+    /* partículas premium */
+    .particle{
+      position:absolute;
+      width:8px;
+      height:8px;
+      background:rgba(255,255,255,0.35);
+      border-radius:50%;
+      filter: blur(0.5px);
+      animation: float 20s linear infinite;
+    }
+
+    @keyframes float{
+      from{ transform: translateY(110vh) scale(0.6); }
+      to{ transform: translateY(-10vh) scale(1.1); }
+    }
+
+    .card{
+      width:92%;
+      max-width:620px;
+      background: var(--card-bg);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border:1px solid var(--card-border);
+      border-radius:26px;
+      padding:28px;
+      box-shadow:0 30px 60px rgba(0,0,0,.35);
+      z-index:1;
+    }
+
+    h1{
+      margin:0;
+      font-size:1.9rem;
+      letter-spacing:.5px;
+    }
+
+    .sub{
+      margin-top:10px;
+      color:var(--text-soft);
+      font-size:1rem;
+    }
+
+    textarea{
+      width:100%;
+      min-height:130px;
+      resize:vertical;
+      padding:16px;
+      margin-top:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.35);
+      background:rgba(255,255,255,0.15);
+      color:var(--text-main);
+      font-size:1rem;
+      outline:none;
+    }
+
+    textarea::placeholder{ color:#e3e5ff; }
+
+    textarea:focus{
+      border-color:var(--accent);
+      box-shadow:0 0 0 2px rgba(185,166,255,.35);
+    }
+
+    button{
+      margin-top:16px;
+      padding:14px 26px;
+      border-radius:999px;
+      border:none;
+      background: linear-gradient(135deg, #c3b7ff, #8fa7ff);
+      color:#1a1f3c;
+      font-weight:700;
+      font-size:1rem;
+      cursor:pointer;
+    }
+
+    button:hover{ filter:brightness(1.05); }
+
+    .respuesta{
+      margin-top:22px;
+      padding:20px;
+      border-radius:20px;
+      background:rgba(255,255,255,0.18);
+      border-left:4px solid var(--accent);
+      font-style:italic;
+      line-height:1.55;
+      display:none;
+    }
+
+    .footer{
+      margin-top:20px;
+      text-align:right;
+      font-size:.85rem;
+      color:var(--text-soft);
+    }
+
+    @media(max-width:480px){
+      h1{ font-size:1.6rem; }
+      .card{ padding:22px; }
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  for(let i=0;i<35;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDuration=(14+Math.random()*18)+'s';
+    p.style.opacity=Math.random();
+    document.body.appendChild(p);
+  }
+</script>
+
+<div class="card">
+  <h1>Perspectiva B</h1>
+  <p class="sub">No todo se entiende desde un solo ángulo.</p>
+
+  <textarea id="opinion" placeholder="Escribe lo que piensas, sin adornos..."></textarea>
+  <button onclick="contradecir()">Explorar otra perspectiva</button>
+
+  <div id="respuesta" class="respuesta"></div>
+
+  <div class="footer">Pensar distinto también es crecer.</div>
+</div>
+
+<script>
+function contradecir(){
+  const texto=document.getElementById('opinion').value.trim().toLowerCase();
+  const box=document.getElementById('respuesta');
+
+  if(!texto){
+    box.style.display='block';
+    box.textContent='A veces no decir nada también es una postura. Pero escribirlo puede revelarte más.';
+    return;
+  }
+
+  let r='Toda certeza merece una pausa antes de convertirse en verdad absoluta.';
+
+  if(texto.includes('siempre')){
+    r='Cuando dices “siempre”, quizá estás cerrando la puerta a una excepción que podría transformarte.';
+  } else if(texto.includes('nunca')){
+    r='El “nunca” suele nacer del miedo a cambiar, no de la imposibilidad real.';
+  } else if(texto.includes('odio')){
+    r='El odio rara vez es el final de una emoción; muchas veces es el inicio de una pregunta no resuelta.';
+  } else if(texto.includes('todos')){
+    r='Reducir a todos a una sola idea tranquiliza, pero también distorsiona la realidad.';
+  } else if(texto.includes('yo')){
+    r='Tu experiencia importa, pero no agota todas las versiones posibles de la verdad.';
+  }
+
+  box.style.display='block';
+  box.textContent=r;
+}
+</script>
+
+</body>
+</html>
